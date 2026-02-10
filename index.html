@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3AM Studio — HVAC Growth (Ontario)</title>
+  <meta name="description" content="3AM Studio helps Ontario HVAC companies generate more booked repair calls and install opportunities using targeted local ads, call tracking, and conversion systems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #05070B;
+      --bg2:#070A10;
+      --text:#FFFFFF;
+      --muted: rgba(255,255,255,.74);
+      --muted2: rgba(255,255,255,.56);
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.09);
+      --line: rgba(255,255,255,.14);
+      --shadow: 0 22px 70px rgba(0,0,0,.58);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1120px;
+      /* Accent is grayscale only */
+      --accentA: rgba(255,255,255,.95);
+      --accentB: rgba(255,255,255,.55);
+      --accentBorder: rgba(255,255,255,.20);
+      /* Section overlay to prevent "blurry glow" */
+      --overlay: rgba(0,0,0,.36);
+      --overlay2: rgba(0,0,0,.22);
+    }
+    *{ box-sizing:border-box; }
+    html,body{
+      margin:0; padding:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 18% -10%, rgba(255,255,255,.10), transparent 62%),
+        radial-gradient(1100px 760px at 88% 0%, rgba(255,255,255,.07), transparent 62%),
+        radial-gradient(1000px 700px at 50% 112%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--text);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ max-width:var(--max); margin:0 auto; padding:0 22px; }
+    /* Background aurora (less aggressive so text stays crisp) */
+    .bgfx{
+      position:fixed; inset:0; pointer-events:none;
+      opacity:.62;
+      background-image:
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.14), transparent 40%),
+        radial-gradient(circle at 82% 22%, rgba(255,255,255,.10), transparent 44%),
+        radial-gradient(circle at 55% 82%, rgba(255,255,255,.09), transparent 48%),
+        radial-gradient(circle at 30% 70%, rgba(255,255,255,.06), transparent 52%);
+      filter: blur(18px);
+      animation: drift 18s ease-in-out infinite alternate, fadeTone 10s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    }
+    @keyframes drift{
+      from { transform: translate3d(-12px,-10px,0) scale(1.01); }
+      to   { transform: translate3d(14px,12px,0) scale(1.05); }
+    }
+    @keyframes fadeTone{
+      0%   { opacity:.55; }
+      50%  { opacity:.72; }
+      100% { opacity:.60; }
+    }
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,7,11,.84), rgba(5,7,11,.46));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap: 14px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:12px;
+      font-weight:900; letter-spacing:.2px;
+      min-width: 220px;
+    }
+    .logoImg{
+      width:38px; height:38px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 16px 48px rgba(255,255,255,.10);
+    }
+    .brandTop{ font-size:14px; opacity:.98; font-weight:900; }
+    .brandSub{ font-size:12px; color:rgba(255,255,255,.70); font-weight:900; margin-top:2px; letter-spacing:.25px; text-transform:uppercase; }
+    .navlinks{
+      display:flex; gap:18px; align-items:center;
+      font-weight:800; color:rgba(255,255,255,.78);
+      white-space: nowrap;
+    }
+    .navlinks a{ padding:8px 10px; border-radius:12px; transition:.18s ease; }
+    .navlinks a:hover{ background: rgba(255,255,255,.06); color:var(--text); }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight:900;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      box-shadow: 0 14px 45px rgba(0,0,0,.28);
+      cursor:pointer;
+      will-change: transform;
+    }
+    .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.26); }
+    .btn.primary{
+      border:1px solid rgba(255,255,255,.26);
+      background: linear-gradient(135deg, var(--accentA), var(--accentB));
+      color: rgba(0,0,0,.90) !important;
+      box-shadow: 0 18px 70px rgba(255,255,255,.18);
+    }
+    .btn.primary:hover{ transform: translateY(-3px); }
+    /* Sections get a subtle overlay to keep text sharp */
+    .sectionOverlay{
+      background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.10));
+      border-top: 1px solid rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    /* HERO */
+    .hero{
+      padding:64px 0 26px;
+      position:relative;
+    }
+    .gridHero{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap:28px;
+      align-items:stretch;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.82);
+      font-weight:800;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 0 14px rgba(255,255,255,.22);
+    }
+    h1{
+      margin:16px 0 12px;
+      font-size: clamp(34px, 4.9vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -1.25px;
+      color: #FFF;
+      text-shadow: none;
+    }
+    .grad{
+      background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,.78), rgba(255,255,255,.98));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .lead{
+      margin:0;
+      font-size: 17px;
+      line-height: 1.62;
+      color: rgba(255,255,255,.78);
+      max-width: 64ch;
+    }
+    .ctaRow{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:18px;
+    }
+    .micro{
+      margin-top:12px;
+      color: rgba(255,255,255,.70);
+      font-size: 13px;
+      display:flex; flex-wrap:wrap; gap:12px; align-items:center;
+    }
+    .pillItem{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.12);
+      white-space: nowrap;
+    }
+    /* SVG icons */
+    .ico{ width:16px; height:16px; display:inline-block; }
+    .ico svg{ width:16px; height:16px; fill:none; stroke:rgba(255,255,255,.90); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    /* Right card */
+    .heroCard{
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+      min-height: 420px;
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-60%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.12), transparent 50%),
+        radial-gradient(circle at 70% 40%, rgba(255,255,255,.08), transparent 52%);
+      filter: blur(16px);
+      opacity:.75;
+      pointer-events:none;
+    }
+    .heroCardInner{ position:relative; z-index:2; }
+    .cardTopRow{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+    }
+    .cardTitle{
+      font-weight:950; font-size:16px; letter-spacing:-.2px;
+      color:#fff;
+    }
+    .cardSub{
+      color: rgba(255,255,255,.74);
+      font-size:13px; margin-top:6px; line-height:1.55;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px; border-radius:999px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.16);
+      color: rgba(255,255,255,.92);
+      font-weight:950;
+      font-size:12px;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+      white-space: nowrap;
+    }
+    .kpiRow{
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    .kpi{
+      padding:14px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .kpi .label{
+      color: rgba(255,255,255,.62);
+      font-size:12px;
+      font-weight:950;
+      letter-spacing:.25px;
+      text-transform:uppercase;
+    }
+    .kpi .val{ margin-top:6px; font-size:20px; font-weight:950; letter-spacing:-.5px; color:#fff; }
+    .kpi .sub{ margin-top:4px; color: rgba(255,255,255,.74); font-size:12px; }
+    .miniChart{
+      margin-top:12px;
+      border-radius: 18px;
+      padding:14px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .chartHeader{
+      display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .chartHeaderTitle{
+      font-weight:950; font-size:14px; color:#fff;
+    }
+    .liftPill{
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:950; font-size:12px;
+      color:#fff;
+      white-space: nowrap;
+    }
+    /* Animated bars */
+    .bars{
+      display:flex; align-items:flex-end; gap:8px;
+      height:82px; margin-top:12px;
+    }
+    .bar{
+      flex:1; border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.18));
+      box-shadow: 0 16px 40px rgba(255,255,255,.08);
+      transform-origin: bottom;
+      height: 10%;
+      opacity:.72;
+      position:relative;
+      overflow:hidden;
+    }
+    .bar:after{
+      content:"";
+      position:absolute; inset:-30%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transform: translateX(-60%) rotate(18deg);
+      opacity:0;
+    }
+    .bar.anim{ animation: grow .9s cubic-bezier(.2,.9,.2,1) both; }
+    .bar.anim:after{ animation: shimmer 2.2s ease-in-out infinite; opacity:.8; }
+    @keyframes grow{
+      from{ transform: scaleY(.12); opacity:.12; }
+      to{ transform: scaleY(1); opacity:.86; }
+    }
+    @keyframes shimmer{
+      0%{ transform: translateX(-70%) rotate(18deg); opacity:0; }
+      30%{ opacity:.85; }
+      60%{ transform: translateX(70%) rotate(18deg); opacity:0; }
+      100%{ opacity:0; }
+    }
+    .cardNote{
+      margin-top:10px;
+      color: rgba(255,255,255,.74);
+      font-size:13px;
+      line-height:1.6;
+    }
+    /* Sections */
+    section{ padding:46px 0; }
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:16px; flex-wrap:wrap;
+      margin-bottom: 18px;
+    }
+    h2{
+      margin:0;
+      font-size: clamp(24px, 3.2vw, 36px);
+      letter-spacing:-.7px;
+      color:#fff;
+    }
+    .subhead{
+      margin:8px 0 0;
+      color: rgba(255,255,255,.74);
+      max-width: 76ch;
+      line-height: 1.62;
+      font-size: 15px;
+    }
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      position:relative;
+      overflow:hidden;
+      min-height: 170px;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.22);
+      background: rgba(0,0,0,.26);
+    }
+    .cardIconBox{
+      width:42px; height:42px; border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      display:grid; place-items:center;
+      box-shadow: 0 18px 50px rgba(255,255,255,.06);
+    }
+    .cardIconBox svg{ width:20px; height:20px; stroke:#fff; }
+    .card h3{
+      margin:12px 0 6px;
+      font-size: 16px;
+      letter-spacing:-.2px;
+      color:#fff;
+    }
+    .card p{
+      margin:0;
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+      line-height: 1.62;
+    }
+    /* Pricing */
+    .pricing{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+      margin-top:16px;
+    }
+    .plan{
+      border-radius: var(--radius2);
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.14);
+      padding:18px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+      min-height: 360px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .planTitle{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .pill2{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px; border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+      font-weight:950;
+      font-size:12px;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+      white-space: nowrap;
+    }
+    .price{
+      margin-top:10px;
+      font-size: 30px;
+      font-weight: 950;
+      letter-spacing:-.8px;
+      color:#fff;
+    }
+    .price span{ font-size: 13px; font-weight:900; color:rgba(255,255,255,.68); margin-left:6px; }
+    ul{ padding-left:18px; margin:12px 0 0; color: rgba(255,255,255,.74); line-height:1.75; font-size:14px; }
+    .plan .btn{ width:100%; margin-top:14px; }
+    .fine{
+      margin-top:10px;
+      font-size: 12px;
+      color: rgba(255,255,255,.60);
+      line-height: 1.55;
+    }
+    .plan.popular{
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 22px 90px rgba(255,255,255,.10);
+      transform: translateY(-2px);
+    }
+    /* ROI strip */
+    .cred{
+      margin-top:18px;
+      padding:16px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+    }
+    .credTitle{ font-weight:950; color:#fff; letter-spacing:-.2px; }
+    .credText{
+      margin-top:8px;
+      color: rgba(255,255,255,.74);
+      line-height:1.65;
+      font-size:14px;
+    }
+    /* FAQ */
+    .faq{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:16px;
+    }
+    details{
+      border-radius: var(--radius);
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.14);
+      padding:14px 16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.20);
+    }
+    summary{
+      cursor:pointer;
+      font-weight:950;
+      letter-spacing:-.2px;
+      list-style:none;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      color:#fff;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .chev{ opacity:.75; transition: transform .18s ease; }
+    details[open] .chev{ transform: rotate(180deg); }
+    details p{
+      margin:10px 0 0;
+      color: rgba(255,255,255,.74);
+      line-height:1.65;
+      font-size: 14px;
+    }
+    /* Footer */
+    footer{
+      padding:36px 0 60px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.60);
+      font-size: 13px;
+      background: rgba(0,0,0,.18);
+    }
+    .footRow{
+      display:flex; justify-content:space-between; align-items:flex-start;
+      gap:18px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .smalllinks{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .smalllinks a{ color: rgba(255,255,255,.70); }
+    .smalllinks a:hover{ color: #fff; }
+    /* Instagram icon link */
+    .igLink{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 14px 40px rgba(0,0,0,.20);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      color: rgba(255,255,255,.86);
+      font-weight:800;
+    }
+    .igLink:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+      color:#fff;
+    }
+    .igIcon{
+      width:18px; height:18px;
+      display:inline-flex;
+      align-items:center; justify-content:center;
+    }
+    .igIcon svg{
+      width:18px; height:18px;
+      fill:none;
+      stroke: rgba(255,255,255,.92);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* Reveal */
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.show{ opacity:1; transform: translateY(0); }
+    /* Responsive */
+    @media (max-width: 980px){
+      .gridHero{ grid-template-columns:1fr; }
+      .heroCard{ min-height: unset; }
+      .cards{ grid-template-columns:1fr; }
+      .pricing{ grid-template-columns:1fr; }
+      .faq{ grid-template-columns:1fr; }
+      .navlinks{ display:none; }
+      .logo{ min-width: auto; }
+    }
+    @media (max-width: 520px){
+      .btn{ width:100%; }
+      .ctaRow .btn{ width:100%; }
+      .kpiRow{ grid-template-columns:1fr; }
+      .igLink{ width:100%; justify-content:center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bgfx"></div>
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="logo">
+          <img class="logoImg" alt="3AM Studio logo" src="https://raw.githubusercontent.com/3AMstudiooffical/iconyx-assets/refs/heads/main/assets/visuals/3AM%20LOGO.png" />
+          <div>
+            <div class="brandTop">3AM Studio</div>
+            <div class="brandSub">HVAC Growth • Ontario</div>
+          </div>
+        </div>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="#how">How it works</a>
+          <a href="#offer">Offer</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+          <a class="btn" href="#book">Book a Call</a>
+          <a class="btn primary" href="#book">Get Started →</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <!-- HERO -->
+    <section class="hero sectionOverlay">
+      <div class="container">
+        <div class="gridHero">
+          <div class="reveal">
+            <div class="badge">
+              <div class="dot"></div>
+              <span>Performance-first local ads for HVAC (calls you can track)</span>
+            </div>
+            <h1>
+              Generate more <span class="grad">booked HVAC calls</span><br/>
+              with targeted local ads.
+            </h1>
+            <p class="lead">
+              We help <b>Ontario HVAC companies</b> drive <b>repair calls</b> and <b>high-ticket install opportunities</b> using high-intent paid traffic,
+              <b>conversion landing pages, call tracking,</b> and disciplined weekly optimization — built for measurable demand.
+            </p>
+            <div class="ctaRow">
+              <a class="btn primary" href="#book">Get a Call Volume Plan →</a>
+              <a class="btn" href="#offer">See the Offer</a>
+            </div>
+            <div class="micro">
+              <span class="pillItem">
+                <span class="ico">
+                  <svg viewBox="0 0 24 24"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                </span>
+                Google + Meta campaigns
+              </span>
+              <span class="pillItem">
+                <span class="ico">
+                  <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.15 10.8 19.86 19.86 0 0 1 .08 2.18 2 2 0 0 1 2.06 0h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.55 2.5a2 2 0 0 1-.45 2.11L6 7.5a16 16 0 0 0 10.5 10.5l1.17-1.16a2 2 0 0 1 2.11-.45c.8.25 1.64.43 2.5.55A2 2 0 0 1 22 16.92z"/></svg>
+                </span>
+                Call tracking & attribution
+              </span>
+              <span class="pillItem">
+                <span class="ico">
+                  <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </span>
+                Fast launch (7–10 days)
+              </span>
+            </div>
+          </div>
+          <!-- SIDE CARD -->
+          <div class="heroCard reveal">
+            <div class="heroCardInner">
+              <div class="cardTopRow">
+                <div>
+                  <div class="cardTitle">Your Demand Engine</div>
+                  <div class="cardSub">Predictable lead flow for installs & repairs — built for owner-operators and multi-truck teams.</div>
+                </div>
+                <div class="pill">HVAC ONLY</div>
+              </div>
+              <div class="kpiRow">
+                <div class="kpi">
+                  <div class="label">Goal</div>
+                  <div class="val">Booked Calls</div>
+                  <div class="sub">Tracked + optimized weekly</div>
+                </div>
+                <div class="kpi">
+                  <div class="label">Focus</div>
+                  <div class="val">Install ROI</div>
+                  <div class="sub">Cost per lead + quality</div>
+                </div>
+              </div>
+              <div class="miniChart">
+                <div class="chartHeader">
+                  <div class="chartHeaderTitle">Weekly Call Volume</div>
+                  <div class="liftPill"><span id="lift">+24%</span> vs last week</div>
+                </div>
+                <div class="bars" aria-hidden="true">
+                  <div class="bar" data-h="38"></div>
+                  <div class="bar" data-h="56"></div>
+                  <div class="bar" data-h="42"></div>
+                  <div class="bar" data-h="78"></div>
+                  <div class="bar" data-h="60"></div>
+                </div>
+                <div class="cardNote">
+                  We test offers, creatives, and targeting — then scale what produces booked calls at efficient cost.
+                </div>
+              </div>
+              <div style="margin-top:14px;">
+                <a class="btn primary" href="#book" style="width:100%;">Get a Call Volume Plan →</a>
+                <div class="fine">No pressure. If we can't win in your area, we'll tell you straight.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- WEEK 1 STRIP -->
+    <section>
+      <div class="container">
+        <div class="reveal" style="border-radius: var(--radius); padding:18px; background: rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.14); box-shadow: var(--shadow);">
+          <div style="font-weight:950; font-size:18px; color:#fff; margin-bottom:12px;">
+            What Happens In The First 7 Days
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:14px;">
+            <div>
+              <div style="font-weight:900; color:#fff;">1. Market + Area Audit</div>
+              <div style="color: rgba(255,255,255,.72); font-size:14px; line-height:1.6;">
+                We analyze your service area, competition, and seasonal demand patterns (repairs + installs).
+              </div>
+            </div>
+            <div>
+              <div style="font-weight:900; color:#fff;">2. Tracking Setup</div>
+              <div style="color: rgba(255,255,255,.72); font-size:14px; line-height:1.6;">
+                Call tracking, conversion tracking, and attribution installed properly so you can see what's working.
+              </div>
+            </div>
+            <div>
+              <div style="font-weight:900; color:#fff;">3. Campaign Launch</div>
+              <div style="color: rgba(255,255,255,.72); font-size:14px; line-height:1.6;">
+                Ads live targeting high-intent repair + install searches. Then weekly iteration to improve cost per booked call.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- HOW -->
+    <section id="how">
+      <div class="container">
+        <div class="sectionTitle reveal">
+          <div>
+            <h2>How we generate calls</h2>
+            <p class="subhead">
+              A focused 3-step system designed for HVAC demand: <b>high-intent traffic → conversion → optimization</b>.
+              Clear, measurable, repeatable.
+            </p>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card reveal">
+            <div class="cardIconBox" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 3"></path>
+              </svg>
+            </div>
+            <h3>Target local homeowners</h3>
+            <p>We build campaigns around your service radius, neighborhoods, and seasonal intent (repair vs install vs emergency).</p>
+          </div>
+          <div class="card reveal">
+            <div class="cardIconBox" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16v16H4z"></path>
+                <path d="M8 12h8"></path>
+                <path d="M8 8h8"></path>
+              </svg>
+            </div>
+            <h3>Convert to booked calls</h3>
+            <p>Landing pages built to drive calls and form fills — with messaging that matches what homeowners are searching for.</p>
+          </div>
+          <div class="card reveal">
+            <div class="cardIconBox" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="M7 14l4-4 3 3 6-6"></path>
+              </svg>
+            </div>
+            <h3>Optimize for revenue</h3>
+            <p>Weekly testing removes wasted spend. We track outcomes and lead quality — not likes, views, or "brand awareness."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- OFFER -->
+    <section id="offer" class="sectionOverlay">
+      <div class="container">
+        <div class="sectionTitle reveal">
+          <div>
+            <h2>The Offer</h2>
+            <p class="subhead">
+              Choose a plan based on how aggressively you want to grow. You keep ownership of ad accounts. Ad spend is separate.
+              <b>Most Ontario teams start at $40–$120/day</b> depending on service area size and season.
+            </p>
+          </div>
+        </div>
+        <div class="pricing">
+          <div class="plan reveal">
+            <div>
+              <div class="planTitle">
+                <div style="font-weight:950; color:#fff;">Starter</div>
+                <div class="pill2">Validate fast</div>
+              </div>
+              <div class="price">$1,500<span>/mo</span></div>
+              <ul>
+                <li>Meta ads setup + management</li>
+                <li>Service area targeting (radius)</li>
+                <li>1 conversion landing page</li>
+                <li>Call tracking + basic attribution</li>
+                <li>Weekly optimization</li>
+              </ul>
+            </div>
+            <div>
+              <a class="btn" href="#book">Book a call</a>
+              <div class="fine">Best if you want a clean, fast launch without overbuilding.</div>
+            </div>
+          </div>
+          <div class="plan popular reveal">
+            <div>
+              <div class="planTitle">
+                <div style="font-weight:950; color:#fff;">Growth</div>
+                <div class="pill2">Most popular</div>
+              </div>
+              <div class="price">$2,500<span>/mo</span></div>
+              <ul>
+                <li>Meta + Google Ads management</li>
+                <li>2 landing page variants (A/B)</li>
+                <li>Missed-call text-back automation</li>
+                <li>Creative + offer testing</li>
+                <li>Monthly performance reporting</li>
+              </ul>
+            </div>
+            <div>
+              <a class="btn primary" href="#book">Book a call</a>
+              <div class="fine">Best value for consistent call flow + scaling what works.</div>
+            </div>
+          </div>
+          <div class="plan reveal">
+            <div>
+              <div class="planTitle">
+                <div style="font-weight:950; color:#fff;">Scale</div>
+                <div class="pill2">Dominance</div>
+              </div>
+              <div class="price">$4,000<span>/mo</span></div>
+              <ul>
+                <li>Multi-campaign scaling (repairs + installs)</li>
+                <li>3+ landing pages + offer testing</li>
+                <li>Lead quality review + insights</li>
+                <li>Seasonal planning (install pushes)</li>
+                <li>Priority support + faster iteration</li>
+              </ul>
+            </div>
+            <div>
+              <a class="btn" href="#book">Book a call</a>
+              <div class="fine">For teams ready to scale spend, improve close rate, and expand territory.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cred reveal">
+          <div class="credTitle">ROI Framing</div>
+          <div class="credText">
+            If one install averages <b>$8,000</b> and we generate just <b>3 additional install opportunities</b> per month,
+            that's <b>$24,000</b> in potential new revenue. Our job is to build predictable demand and continuously improve the cost per booked call.
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <div class="sectionTitle reveal">
+          <div>
+            <h2>FAQ</h2>
+            <p class="subhead">Straight answers HVAC owners care about.</p>
+          </div>
+        </div>
+        <div class="faq">
+          <details class="reveal">
+            <summary>Do you guarantee results? <span class="chev">▾</span></summary>
+            <p>
+              We don't promise exact numbers because markets, budgets, and closing rates vary. What we do guarantee is disciplined tracking,
+              weekly optimization, and clear reporting — and we'll tell you fast if we don't believe we can win in your area.
+            </p>
+          </details>
+          <details class="reveal">
+            <summary>Do I need to post on social media? <span class="chev">▾</span></summary>
+            <p>
+              Not required. This is performance marketing. We use paid traffic to generate repair calls and install opportunities.
+              Posting content is optional and only added if it improves conversion.
+            </p>
+          </details>
+          <details class="reveal">
+            <summary>How fast can we launch? <span class="chev">▾</span></summary>
+            <p>
+              Typically 7–10 days depending on access (ad accounts, tracking, landing pages). If you already have assets ready, we can move faster.
+            </p>
+          </details>
+          <details class="reveal">
+            <summary>What do you need from me? <span class="chev">▾</span></summary>
+            <p>
+              Your service area, core services (repairs + installs), any financing/promos, and a reliable call handling process.
+              We can also implement missed-call automation to reduce lost leads.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- BOOK -->
+    <section id="book" class="sectionOverlay">
+      <div class="container">
+        <div class="reveal" style="border-radius: var(--radius2); padding:22px; background: rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.14); box-shadow: var(--shadow);">
+          <h2 style="margin:0 0 8px;">Ready to scale your HVAC business?</h2>
+          <p class="subhead" style="margin-top:0;">
+            Book a 15-minute call. We'll assess your area and map out a clean structure to generate booked calls for repairs + installs.
+          </p>
+          <div style="margin-top:12px; display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:12px;">
+            <div style="border-radius: var(--radius); padding:14px; background: rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.12);">
+              <div style="font-weight:950; color:#fff; margin-bottom:6px;">What we need from you</div>
+              <div style="color: rgba(255,255,255,.72); font-size:14px; line-height:1.6;">
+                • Your service area + top services<br/>
+                • Any promos/financing (optional)<br/>
+                • A phone that gets answered (or we add missed-call text-back)
+              </div>
+            </div>
+            <div style="border-radius: var(--radius); padding:14px; background: rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.12);">
+              <div style="font-weight:950; color:#fff; margin-bottom:6px;">Good fit if</div>
+              <div style="color: rgba(255,255,255,.72); font-size:14px; line-height:1.6;">
+                • You want predictable demand<br/>
+                • You can fulfill more calls/jobs<br/>
+                • You're willing to test & iterate weekly
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
+            <a class="btn primary" href="https://calendly.com/" target="_blank" rel="noopener">Book on Calendly →</a>
+            <a class="btn" href="mailto:contactofficial3amstudio@gmail.com?subject=HVAC%20Call%20Volume%20Plan">Email Us</a>
+          </div>
+          <div class="fine" style="margin-top:10px;">
+            Email is connected. Replace Calendly link when ready.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <img class="logoImg" alt="3AM Studio logo" src="https://raw.githubusercontent.com/3AMstudiooffical/iconyx-assets/refs/heads/main/assets/visuals/3AM%20LOGO.png" />
+          <div><b style="color:#fff;">3AM Studio</b> <span style="opacity:.75;">— HVAC Growth</span></div>
+        </div>
+        <div style="opacity:.75;">© <span id="year"></span> 3AM Studio. All rights reserved.</div>
+      </div>
+      <div class="footRow">
+        <div style="max-width:72ch; line-height:1.65;">
+          <div style="font-weight:950; color:#fff; margin-bottom:6px;">Disclaimer</div>
+          <div>Results depend on market conditions, your sales process, and ad spend. We focus on measurable outcomes and transparent reporting.</div>
+        </div>
+        <div>
+          <div style="font-weight:950; color:#fff; margin-bottom:6px;">Quick Links</div>
+          <div class="smalllinks">
+            <a href="#how">How it works</a>
+            <a href="#offer">Offer</a>
+            <a href="#faq">FAQ</a>
+            <a href="#book">Book</a>
+          </div>
+          <div style="margin-top:12px;">
+            <div style="font-weight:950; color:#fff; margin-bottom:8px;">Instagram</div>
+            <!-- Instagram icon embedded with your link -->
+            <a class="igLink" href="https://www.instagram.com/3amstudio/" target="_blank" rel="noopener" aria-label="Open 3AM Studio on Instagram">
+              <span class="igIcon" aria-hidden="true">
+                <!-- Instagram glyph (inline SVG) -->
+                <svg viewBox="0 0 24 24">
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
+                  <circle cx="12" cy="12" r="4.2"></circle>
+                  <path d="M17.6 6.4h.01"></path>
+                </svg>
+              </span>
+              <span>instagram.com/3amstudio</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Reveal on scroll
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) e.target.classList.add('show');
+    }, { threshold: 0.12 });
+    items.forEach(el => io.observe(el));
+    // Chart: Always set heights + animate (reliable, no 0% bug)
+    const liftEl = document.getElementById('lift');
+    const targetLift = 24;
+    liftEl.textContent = `+${targetLift}%`;
+    function animateBars(){
+      const bars = document.querySelectorAll('.bar');
+      bars.forEach((bar, idx) => {
+        const target = Number(bar.getAttribute('data-h')) || 50;
+        bar.style.height = target + "%";
+        setTimeout(() => bar.classList.add('anim'), 120 + idx * 90);
+      });
+      // Animate lift (subtle)
+      let cur = 0;
+      const start = performance.now();
+      function tick(t){
+        const p = Math.min(1, (t - start) / 850);
+        cur = Math.floor(targetLift * p);
+        liftEl.textContent = `+${cur}%`;
+        if (p < 1) requestAnimationFrame(tick);
+        else liftEl.textContent = `+${targetLift}%`;
+      }
+      requestAnimationFrame(tick);
+    }
+    // Run once after paint
+    window.addEventListener('load', () => {
+      setTimeout(animateBars, 300);
+    });
+  </script>
+</body>
+</html>
